@@ -128,4 +128,48 @@ def interpolate(element,wl_init=400,wl_fin=900):
 
         # print (x_,y_,z_)
     return (x,y,z)
+##Transfer Matrix Method
+
+#Defining E  and H of incident light as superposition of left and right
+#travelling wave with wave number ki and wavelength lam0
+lam0 = [ , , , , , , , ] #list of wavelengths
+k0 = (2 * math.pi())/lam0
+phi = [, , , ,] #list of angles used for incident light with array
+Er =    
+El = 
+E = Er +El
+
+
+#square root of epsilon/mu is the 1/Zc where Zc is the wave impedance of media
+#Zc is also the ratio of the magnitude of E and H. Zc = E/H
+#relation between E and H is given by H = (1/ikZc)(dE/dz) from maxwell equation
+eps0 = 
+mu0 =
+Z0 = (math.sqrt(mu0/eps0))
+H = (Z0 ** -1) *((Er - El)
+                          
+#Setting up initial conditions of incident light at surface
+#of stacked dielectrics (z = 0). Outputs Matrix with initial E and H                          
+z = 0
+Wave = np.array([E,H])
+print(Wave)
+
+                          
+#Transfer Matrix of layers
+k = [ , , , , ,]  #array of medium wavenumber of layers
+L = [, , , ,] #array of widths of each layer
+mu = [ , , , ,] #list of magnetic permeabilities of ordered layers
+eps = [ , , , ,] #list of electric permittivities of  ordered layers
+for i in range(0,5):
+                 Zc = math.sqrt(mu[i]/eps[i])
+                 M11 = math.cos(k[i]*L[i]) #matrix elements of layers
+                 M12 = j * Zc * (math.sin(k[i]*L[i])
+                 M21 = j * (Zc ** -1) *(math.sin(k[i]*L[i])
+                 M22 = math.cos(k[i]*L[i])
+                 M = np.array([[M11,M12],[M21,M22]])
+                 Wave = np.dot(M,Wave) #matrix multiplication representing transformation of E and H in media
+
+print(Wave)                       
+Ei = (Er*(math.exp(*j*ki*z))) + (El*(math.exp(-j*ki*z)))
+Hi = Zc *((Er*(math.exp(*j*ki*z))) - (El*(math.exp(-j*ki*z))))
     
